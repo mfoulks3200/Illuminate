@@ -5,6 +5,7 @@ import com.jme3.app.SimpleApplication;
 import com.jme3.app.StatsAppState;
 import com.jme3.asset.AssetManager;
 import com.jme3.audio.AudioListenerState;
+import com.jme3.input.MouseInput;
 import com.jme3.light.AmbientLight;
 import com.jme3.light.DirectionalLight;
 import com.jme3.light.SpotLight;
@@ -14,6 +15,8 @@ import com.jme3.scene.Node;
 import com.jme3.scene.shape.Box;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.FastMath;
+import com.jme3.math.Ray;
+import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
 
 /** Sample 1 - how to get started with the most simple JME 3 application.
@@ -50,5 +53,7 @@ public class Viz extends SimpleApplication {
         fixtureGeometry.setMaterial(base);
         fixtureGeometry.rotate(-20,0,0);
         rootNode.attachChild(fixtureGeometry);
+        
+    
     }
 }

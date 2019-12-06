@@ -1,8 +1,11 @@
 import java.awt.EventQueue;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.InetAddress;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.UnknownHostException;
 import java.nio.file.Files;
@@ -29,21 +32,20 @@ public class Main {
 	public static Inspector inspect;
 	
 	public static void main(String[] args) {
-		byte[] content = null;
+		Gel.loadGels(getURL("http://notelek.com/Blackbody.CSV"));
+		Gel.loadGels(getURL("http://notelek.com/gelDB.csv"));
+		
+		/*stream = Main.class.getResourceAsStream("/resources/gelDB.csv");
 		try {
-			content = Files.readAllBytes(Paths.get("gelDB.csv"));
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+		 input = new Scanner (stream);
+		} catch (Exception e) {
+			
 		}
-		Gel.loadGels(new String(content));
-		try {
-			content = Files.readAllBytes(Paths.get("Blackbody.CSV"));
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+		file = "";
+		while (input.hasNextLine()) {
+			file += input.nextLine()+"\n";
 		}
-		Gel.loadGels(new String(content));
+		Gel.loadGels(file);*/
         
 		universes.add(new ArtNetLink(0));
 		EventQueue.invokeLater(new Runnable() {
@@ -56,7 +58,7 @@ public class Main {
 				}
 			}
 		});
-		EventQueue.invokeLater(new Runnable() {
+		/*EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					SceneGraphGUI frame = new SceneGraphGUI();
@@ -65,21 +67,11 @@ public class Main {
 					e.printStackTrace();
 				}
 			}
-		});
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					inspect = new Inspector();
-					inspect.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+		});*/
 		app = new Viz();
 		app.setShowSettings(false);
 		AppSettings set = new AppSettings(true);
-		set.setResolution(1920, 1080);
+		set.setResolution(800, 600);
 		set.setTitle("Illuminate v0.01a");
 		app.setPauseOnLostFocus(false);
 		app.setSettings(set);
@@ -111,5 +103,29 @@ public class Main {
 	
 	public static void setSelected(Spatial f) {
 		selected = f;
+	}
+	
+	public static String getURL(String uri) {
+		try {
+            
+            URL url = new URL(uri);
+             
+            // read text returned by server
+            BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
+            String outp = "";
+            String line;
+            while ((line = in.readLine()) != null) {
+                outp += line+"\n";
+            }
+            in.close();
+             return outp;
+        }
+        catch (MalformedURLException e) {
+            System.out.println("Malformed URL: " + e.getMessage());
+        }
+        catch (IOException e) {
+            System.out.println("I/O Error: " + e.getMessage());
+        }
+		return "";
 	}
 }

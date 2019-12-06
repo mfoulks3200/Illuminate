@@ -72,7 +72,7 @@ public class Main {
 		app.setShowSettings(false);
 		AppSettings set = new AppSettings(true);
 		set.setResolution(800, 600);
-		set.setTitle("Illuminate v0.01a");
+		set.setTitle("Illuminate v0.02a");
 		app.setPauseOnLostFocus(false);
 		app.setSettings(set);
         app.start(); // start the game

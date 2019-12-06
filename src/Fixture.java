@@ -22,6 +22,7 @@ public class Fixture {
 	public int address;
 	public static int footprint;
 	public static String fixtureName = "Generic Fixture";
+	public static HashMap<Geometry, Fixture> fixtures = new HashMap<>();
 	public static String nickname;
 	public static Attributes[] personality;
 	public Geometry fixtureGeometry;
@@ -102,7 +103,8 @@ public class Fixture {
 	        LightControl lightControl = new LightControl(spot);
 	        fixtureGeometry.addControl(lightControl); // this spatial controls the position of this light.
 	        Main.app.getRootNode().addLight(spot);
-	        
+	        fixtureGeometry.setUserData("object_type", "fixture");
+	        fixtures.put(fixtureGeometry, this);
 		}
         return fixtureGeometry;
 	}

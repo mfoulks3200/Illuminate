@@ -29,7 +29,7 @@ public class Main {
 	public static HashMap<Geometry, Fixture> fixtures = new HashMap<>();
 	public static Viz app;
 	public static Spatial selected;
-	public static Inspector inspect;
+	public static JFrame fixtureEditor;
 	
 	public static void main(String[] args) {
 		Gel.loadGels(getURL("http://notelek.com/Blackbody.CSV"));
@@ -58,7 +58,7 @@ public class Main {
 				}
 			}
 		});
-		/*EventQueue.invokeLater(new Runnable() {
+		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					SceneGraphGUI frame = new SceneGraphGUI();
@@ -67,7 +67,7 @@ public class Main {
 					e.printStackTrace();
 				}
 			}
-		});*/
+		});
 		app = new Viz();
 		app.setShowSettings(false);
 		AppSettings set = new AppSettings(true);
@@ -76,10 +76,6 @@ public class Main {
 		app.setPauseOnLostFocus(false);
 		app.setSettings(set);
         app.start(); // start the game
-        Leko l = new Leko();
-        addFixture(l);
-		JFrame e = l.fixtureEditor();
-		e.setVisible(true);
 	}
 	
 	public static void addFixture(Fixture f) {

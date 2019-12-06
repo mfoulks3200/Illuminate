@@ -1,6 +1,7 @@
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
 import java.util.concurrent.Callable;
 
 import javax.swing.JCheckBox;
@@ -41,10 +42,11 @@ public class Leko extends Fixture{
 	public Gel gel;
 	private boolean overrideEnable = false;
 	private float overrideValue = 0.0f;
+	public static String fixtureName = "Leko";
 	
 	public Leko() {
 		super();
-		position = new Vector3f(0,2,2);
+		position = new Vector3f(0f,20f,-20f);
 		rotation = new Vector3f(0,0,0);
 		gel = Gel.getGel(Manufacturer.Blackbody, 3000);
 	}
@@ -83,14 +85,14 @@ public class Leko extends Fixture{
 	    	Material base = new Material(Main.app.getAssetManager(),  // Create new material and...
 	        	    "Common/MatDefs/Light/Lighting.j3md"); // ... specify .j3md file to use (illuminated).
 	    	base.setBoolean("UseMaterialColors",true);  // Set some parameters, e.g. blue.
-	    	base.setColor("Ambient", ColorRGBA.DarkGray);   // ... color of this object
-	    	base.setColor("Diffuse", ColorRGBA.DarkGray);
+	    	base.setColor("Ambient", ColorRGBA.Gray);   // ... color of this object
+	    	base.setColor("Diffuse", ColorRGBA.Gray);
 	        fixtureGeometry.setMaterial(base);
 	        
 
 	        
 	        spot = new SpotLight();
-	        spot.setSpotRange(100f);                           // distance
+	        spot.setSpotRange(5000f);
 	        spot.setSpotInnerAngle(degrees * sharpness * FastMath.DEG_TO_RAD); // inner light cone (central beam)
 	        spot.setSpotOuterAngle(degrees * FastMath.DEG_TO_RAD); // outer light cone (edge of the light)
 	        spot.setColor(ColorRGBA.White.mult(1.3f));         // light color
@@ -99,6 +101,8 @@ public class Leko extends Fixture{
 	        
 	        LightControl lightControl = new LightControl(spot);
 	        fixtureGeometry.addControl(lightControl); // this spatial controls the position of this light.
+	        fixtureGeometry.setUserData("object_type", "fixture");
+	        fixtures.put(fixtureGeometry, this);
 	        Main.app.getRootNode().addLight(spot);
 	        
 		}

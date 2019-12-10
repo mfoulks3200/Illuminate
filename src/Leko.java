@@ -40,6 +40,7 @@ public class Leko extends Fixture{
 	public float sharpness = 0.95f;
 	public int degrees = 32;
 	public Gel gel;
+	public Gel emitter;
 	private boolean overrideEnable = false;
 	private float overrideValue = 0.0f;
 	public static String fixtureName = "Leko";
@@ -48,7 +49,8 @@ public class Leko extends Fixture{
 		super();
 		position = new Vector3f(0f,20f,-20f);
 		rotation = new Vector3f(0,0,0);
-		gel = Gel.getGel(Manufacturer.Blackbody, 3000);
+		emitter = Gel.getGel(Manufacturer.Blackbody, 3000);
+		gel = Gel.getGel(Manufacturer.Stock, 0);
 	}
 	
 	@Override
@@ -58,10 +60,12 @@ public class Leko extends Fixture{
 		        public Integer call() throws Exception {
 			        fixtureGeometry.setLocalTranslation(position);
 			        ColorRGBA col = new ColorRGBA(((float)gel.red)/255f,((float)gel.green)/255f,((float)gel.blue)/255f,1f);
+			        ColorRGBA bb = new ColorRGBA(((float)emitter.red)/255f,((float)emitter.green)/255f,((float)emitter.blue)/255f,1f);
+			        ColorRGBA fin = col.mult(bb);
 			    if(!overrideEnable) {
-			    		spot.setColor(col.mult((((float)getLocalPercent(1)))/100f));  
+			    		spot.setColor(fin.mult((((float)getLocalPercent(1)))/100f));  
 		        }else {
-		        		spot.setColor(col.mult((((float)overrideValue))/100f));  
+		        		spot.setColor(fin.mult((((float)overrideValue))/100f));  
 		        }
 		        	spot.setSpotInnerAngle(degrees * sharpness * FastMath.DEG_TO_RAD); // inner light cone (central beam)
 			    spot.setSpotOuterAngle(degrees * FastMath.DEG_TO_RAD); // outer light cone (edge of the light)
@@ -119,7 +123,7 @@ public class Leko extends Fixture{
 		JPanel contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		f.setContentPane(contentPane);
-		contentPane.setLayout(new MigLayout("", "[:25px:25px][25px][25px][25px][25px][25px][25px][:25px:25px][:25px:25px]", "[][][][][][][][][][][][][][][][grow]"));
+		contentPane.setLayout(new MigLayout("", "[:25px:25px][25px][25px][25px][25px][25px][25px][:25px:25px][:25px:25px]", "[][][][][][][][][][][][][][][][][grow]"));
 		
 		JLabel lblPosition = new JLabel("Position");
 		lblPosition.setFont(new Font("Tahoma", Font.BOLD, 21));
@@ -201,24 +205,30 @@ public class Leko extends Fixture{
 		JComboBox gelSelect = new JComboBox(Gel.getAllGels());
 		contentPane.add(gelSelect, "cell 4 11 5 1,growx");
 		
+		JLabel lblEmitter = new JLabel("Emitter");
+		contentPane.add(lblEmitter, "cell 0 12");
+		
+		JComboBox emitterBox = new JComboBox(Gel.getAllBlackBody());
+		contentPane.add(emitterBox, "cell 4 12 5 1,growx");
+		
 		JLabel lblOverrideArtnet = new JLabel("Override Art-Net");
-		contentPane.add(lblOverrideArtnet, "cell 0 12");
+		contentPane.add(lblOverrideArtnet, "cell 0 13");
 		
 		JCheckBox checkBox = new JCheckBox("");
-		contentPane.add(checkBox, "cell 4 12");
+		contentPane.add(checkBox, "cell 4 13");
 		
 		JLabel lblFixtureValue = new JLabel("Override Value");
-		contentPane.add(lblFixtureValue, "cell 0 13");
+		contentPane.add(lblFixtureValue, "cell 0 14");
 		
 		JSlider override = new JSlider();
-		contentPane.add(override, "cell 4 13 5 1");
+		contentPane.add(override, "cell 4 14 5 1");
 		
 		JLabel lblNotes = new JLabel("Notes");
 		lblNotes.setFont(new Font("Tahoma", Font.BOLD, 21));
-		contentPane.add(lblNotes, "cell 0 14");
+		contentPane.add(lblNotes, "cell 0 15");
 		
 		JEditorPane editorPane = new JEditorPane();
-		contentPane.add(editorPane, "cell 0 15 9 1,grow");
+		contentPane.add(editorPane, "cell 0 16 9 1,grow");
 		
 		
 		posX.setValue(position.x);
@@ -317,11 +327,21 @@ public class Leko extends Fixture{
 			}
 			
 		});
+		emitterBox.setSelectedItem(emitter);
+		emitterBox.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				emitter = (Gel) emitterBox.getSelectedItem();
+			}
+			
+		});
 		checkBox.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				overrideEnable = checkBox.isSelected();
+				overrideValue = override.getValue();
 			}
 			
 		});

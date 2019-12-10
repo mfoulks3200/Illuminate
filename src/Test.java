@@ -44,7 +44,7 @@ public class Test extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(new MigLayout("", "[:25px:25px][25px][25px][25px][25px][25px][25px][:25px:25px][:25px:25px]", "[][][][][][][][][][][][][][][][grow]"));
+		contentPane.setLayout(new MigLayout("", "[:25px:25px][25px][25px][25px][25px][25px][25px][:25px:25px][:25px:25px]", "[][][][][][][][][][][][][][][][][grow]"));
 		
 		JLabel lblPosition = new JLabel("Position");
 		lblPosition.setFont(new Font("Tahoma", Font.BOLD, 21));
@@ -132,24 +132,30 @@ public class Test extends JFrame {
 		JComboBox gelSelect = new JComboBox(Gel.getAllGels());
 		contentPane.add(gelSelect, "cell 4 11 5 1,growx");
 		
+		JLabel lblEmitter = new JLabel("Emitter");
+		contentPane.add(lblEmitter, "cell 0 12");
+		
+		JComboBox comboBox = new JComboBox();
+		contentPane.add(comboBox, "cell 4 12 5 1,growx");
+		
 		JLabel lblOverrideArtnet = new JLabel("Override Art-Net");
-		contentPane.add(lblOverrideArtnet, "cell 0 12");
+		contentPane.add(lblOverrideArtnet, "cell 0 13");
 		
 		JCheckBox checkBox = new JCheckBox("");
-		contentPane.add(checkBox, "cell 4 12");
+		contentPane.add(checkBox, "cell 4 13");
 		
 		JLabel lblFixtureValue = new JLabel("Override Value");
-		contentPane.add(lblFixtureValue, "cell 0 13");
+		contentPane.add(lblFixtureValue, "cell 0 14");
 		
 		JSlider slider = new JSlider();
-		contentPane.add(slider, "cell 4 13 5 1");
+		contentPane.add(slider, "cell 4 14 5 1");
 		
 		JLabel lblNotes = new JLabel("Notes");
 		lblNotes.setFont(new Font("Tahoma", Font.BOLD, 21));
-		contentPane.add(lblNotes, "cell 0 14");
+		contentPane.add(lblNotes, "cell 0 15");
 		
 		JEditorPane editorPane = new JEditorPane();
-		contentPane.add(editorPane, "cell 0 15 9 1,grow");
+		contentPane.add(editorPane, "cell 0 16 9 1,grow");
 	}
 
 }

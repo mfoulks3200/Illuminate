@@ -22,8 +22,26 @@ public class Gel {
 	}
 	
 	public static Gel[] getAllGels() {
-		Gel[] g = new Gel[gels.size()];
-		g = gels.toArray(g);
+		ArrayList<Gel> gs = new ArrayList<>();
+		for(int i = 0; i < gels.size(); i++) {
+			if(gels.get(i).manufacturer != Manufacturer.Blackbody) {
+				gs.add(gels.get(i));
+			}
+		}
+		Gel[] g = new Gel[gs.size()];
+		g = gs.toArray(g);
+		return g;
+	}
+	
+	public static Gel[] getAllBlackBody() {
+		ArrayList<Gel> gs = new ArrayList<>();
+		for(int i = 0; i < gels.size(); i++) {
+			if(gels.get(i).manufacturer == Manufacturer.Blackbody) {
+				gs.add(gels.get(i));
+			}
+		}
+		Gel[] g = new Gel[gs.size()];
+		g = gs.toArray(g);
 		return g;
 	}
 	

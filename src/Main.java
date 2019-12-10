@@ -32,6 +32,7 @@ public class Main {
 	public static JFrame fixtureEditor;
 	
 	public static void main(String[] args) {
+		Gel g = new Gel(Manufacturer.Stock, 0, "No Color", 255, 255, 255);
 		Gel.loadGels(getURL("http://notelek.com/Blackbody.CSV"));
 		Gel.loadGels(getURL("http://notelek.com/gelDB.csv"));
 		
